@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6fd6a928f6df273300bd549a432635c6:b4e3ad1e488637d2177416ec7759e68c:a51e9fec0813520bcff14e9f4952fbca$ -->
+<TextureAtlas imagePath="SnaketrisSprites.png">
+    <SubTexture name="Credits" x="81" y="46" width="40" height="13"/>
+    <SubTexture name="Help" x="2" y="31" width="26" height="17"/>
+    <SubTexture name="NewGame" x="64" y="31" width="61" height="13"/>
+    <SubTexture name="Title" x="2" y="2" width="112" height="27"/>
+    <SubTexture name="blue" x="30" y="31" width="15" height="14"/>
+    <SubTexture name="green" x="30" y="47" width="15" height="14"/>
+    <SubTexture name="purple" x="47" y="31" width="15" height="14"/>
+    <SubTexture name="red" x="47" y="47" width="15" height="14"/>
+    <SubTexture name="yellow" x="64" y="46" width="15" height="14"/>
+</TextureAtlas>

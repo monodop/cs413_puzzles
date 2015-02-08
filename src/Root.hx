@@ -23,7 +23,13 @@ class Root extends Sprite {
     public function start(startup:Startup) {
 
         assets = new AssetManager();
-        //assets.enqueue("assets/ninja.png");
+        assets.enqueue("assets/Snake.png");
+        assets.enqueue("assets/SnaketrisSprites.png");
+        assets.enqueue("assets/SnaketrisSprites.xml");
+        /*
+            The sprite sheet contains the following items (png):
+            Credits, Help, NewGame, Title, blue, green, purple, red, yellow
+        */
 		
         assets.loadQueue(function onProgress(ratio:Float) {
             haxe.Log.clear();

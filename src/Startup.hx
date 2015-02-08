@@ -20,6 +20,7 @@ class Startup extends Sprite {
         loadingBitmap.width = flash.Lib.current.stage.stageWidth;
         loadingBitmap.height = flash.Lib.current.stage.stageHeight;
         loadingBitmap.smoothing = true;
+        addChild(loadingBitmap);
 
         flash.Lib.current.stage.addEventListener(flash.events.Event.RESIZE,
             function(e:flash.events.Event) {
