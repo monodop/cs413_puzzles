@@ -36,6 +36,7 @@ class Root extends Sprite {
             trace(ratio);
             if (ratio == 1) {
                 haxe.Log.clear();
+                startup.removeChild(startup.loadingBitmap);
                 var menu = new Main(rootSprite);
                 menu.start();                
             }
