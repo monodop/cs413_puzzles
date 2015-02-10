@@ -35,7 +35,10 @@ class Main extends Sprite {
 		this.y = center.y;
 		this.scaleX = 8;
 		this.scaleY = 8;
-		
+
+		Root.assets.playSound("Snaketris");
+
+
 		snakeLogo = new Image(Root.assets.getTexture("Title"));
 		var setLogo = snakeLogo;
 		setLogo.x = center.x;
