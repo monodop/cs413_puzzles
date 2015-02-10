@@ -39,7 +39,7 @@ class Main extends Sprite {
 		snakeLogo = new Image(Root.assets.getTexture("Title"));
 		var setLogo = snakeLogo;
 		setLogo.x = center.x;
-		setLogo.y = center.y;
+		setLogo.y = 10;
 		this.addChild(setLogo);
 		
 		buttons = [new Image(Root.assets.getTexture("NewGame")), new Image(Root.assets.getTexture("Help")), new Image(Root.assets.getTexture("Credits"))];
@@ -66,8 +66,7 @@ class Main extends Sprite {
 		if (event.keyCode == Keyboard.SPACE) {
 		
 			if (selection == 0) {
-				// Start
-				
+				// NewGame
 				var game = new Game(rootSprite);
 				game.bgcolor = this.bgcolor;
 				game.startGame(rootSprite);
@@ -78,6 +77,15 @@ class Main extends Sprite {
 				});
 			}
 			else if (selection == 1) {
+				// Help
+				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+				transitionOut(function() {
+					this.removeFromParent();
+					this.dispose();
+				});
+
+			}
+			else if (selection == 2) {
 				// Credits
 				//var credits = new Credits(rootSprite);
 				//credits.bgcolor = this.bgcolor;
