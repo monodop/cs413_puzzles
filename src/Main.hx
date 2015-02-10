@@ -7,6 +7,8 @@ import starling.core.Starling;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.display.Image;
+import starling.text.TextField;
+import starling.text.BitmapFont;
 
 class Main extends Sprite {
 	
@@ -38,6 +40,10 @@ class Main extends Sprite {
 
 		Root.assets.playSound("Snaketris");
 
+		var title:TextField = new TextField(60, 60, "Snaketris", "font");
+		title.fontSize = BitmapFont.NATIVE_SIZE;
+		title.color = Color.WHITE;
+		addChild(title);
 
 		snakeLogo = new Image(Root.assets.getTexture("Title"));
 		var setLogo = snakeLogo;
