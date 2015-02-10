@@ -93,7 +93,7 @@ class Main extends Sprite {
 		else if (tween == null || tween.isComplete)
 		{	
 			// Only allow moving if the current tween does not exist.
-			if (event.keyCode == Keyboard.LEFT) {
+			if (event.keyCode == Keyboard.UP) {
 				Root.assets.playSound("SelectOption");
 				
 				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
@@ -108,7 +108,7 @@ class Main extends Sprite {
 				tween.animate("scaleY", 1.5);
 				Starling.juggler.add(tween);
 			}
-			else if (event.keyCode == Keyboard.RIGHT) {
+			else if (event.keyCode == Keyboard.DOWN) {
 				Root.assets.playSound("SelectOption");
 				
 				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
