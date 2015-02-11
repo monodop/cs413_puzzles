@@ -8,6 +8,6 @@
     <content>game.swf</content>
     <renderMode>direct</renderMode>
     <autoOrients>false</autoOrients>
-    <aspectRatio>landscape</aspectRatio>
+    <aspectRatio>portrait</aspectRatio>
   </initialWindow>
 </application>

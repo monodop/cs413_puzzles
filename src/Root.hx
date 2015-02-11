@@ -31,6 +31,9 @@ class Root extends Sprite {
 		assets.enqueue("assets/SelectOption.mp3");
 		assets.enqueue("assets/TouchGround.mp3");
         assets.enqueue("assets/Snake.png");
+		assets.enqueue("assets/Tile.png");
+		assets.enqueue("assets/TileBottomRed.png");
+		assets.enqueue("assets/TileTopRed.png");
         assets.enqueue("assets/SnaketrisSprites.png");
         assets.enqueue("assets/SnaketrisSprites.xml");
         /*
