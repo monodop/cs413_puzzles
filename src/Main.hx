@@ -39,14 +39,13 @@ class Main extends Sprite {
 		this.scaleX = 8;
 		this.scaleY = 8;
 
-		Root.assets.playSound("Snaketris");
+		//Root.assets.playSound("Snaketris");
 
 		var title:TextField = new TextField(490, 700, "Snaketris", "font");
 		title.fontSize = 100;
 		title.color = Color.WHITE;
 		title.x = center.x - 150;
 		title.y = -250;
-
 		this.addChild(title);
 /*
 		snakeLogo = new Image(Root.assets.getTexture("Title"));
@@ -100,9 +99,9 @@ class Main extends Sprite {
 			}
 			else if (selection == 2) {
 				// Credits
-				//var credits = new Credits(rootSprite);
-				//credits.bgcolor = this.bgcolor;
-				//credits.start();
+				var credits = new Credits(rootSprite);
+				credits.bgcolor = this.bgcolor;
+				credits.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 				transitionOut(function() {
 					this.removeFromParent();
