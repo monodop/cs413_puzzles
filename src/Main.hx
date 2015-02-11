@@ -83,6 +83,9 @@ class Main extends Sprite {
 			}
 			else if (selection == 1) {
 				// Help
+				var help = new Help(rootSprite);
+				help.bgcolor = this.bgcolor;
+				help.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 				Root.assets.removeSound("Snaketris");
 				transitionOut(function() {

@@ -17,8 +17,7 @@ class Credits extends Sprite {
 	
 	private var transitionSpeed = 0.5;
 	public var bgcolor = 255;
-	
-	private var names:List<Image>;
+
 	public var credits:TextField = new TextField(400, 900, "Sean Baquiro\n\nJack Burell\n\nKyle Granchelli\n\nHarrison Lambeth\n\nDavid Terry", "font");
 	
 	public function new(rootSprite:Sprite) {
