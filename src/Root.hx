@@ -23,6 +23,9 @@ class Root extends Sprite {
     public function start(startup:Startup) {
 
         assets = new AssetManager();
+        assets.enqueue("assets/font/font.png");
+        assets.enqueue("assets/font/font.fnt");
+        assets.enqueue("assets/Snaketris.mp3");
 		assets.enqueue("assets/EraseSnake.mp3");
 		assets.enqueue("assets/GameOver.mp3");
 		assets.enqueue("assets/SelectOption.mp3");

@@ -1,4 +1,4 @@
-import starling.events.KeyboardEvent;
+
 import flash.ui.Keyboard;
 import flash.geom.Vector3D;
 import starling.display.Sprite;
@@ -7,20 +7,23 @@ import starling.core.Starling;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.display.Image;
+import starling.text.TextField;
+import starling.text.BitmapFont;
+import starling.utils.Color;
+import starling.events.KeyboardEvent;
+
 
 class Main extends Sprite {
 	
 	public var rootSprite:Sprite;
-	
 	private var selection:Int;
 	private var buttons:Array<Image>;
 	private var snakeLogo:Image;
-	
 	private var rotateSpeed = 0.3;
 	private var transitionSpeed = 0.5;
 	private var tween:Tween;
 	public var bgcolor = 255;
-	
+
 	public function new(rootSprite:Sprite) {
 		this.rootSprite = rootSprite;
 		super();
@@ -35,20 +38,21 @@ class Main extends Sprite {
 		this.y = center.y;
 		this.scaleX = 8;
 		this.scaleY = 8;
-		
-		snakeLogo = new Image(Root.assets.getTexture("Title"));
-		var setLogo = snakeLogo;
-		setLogo.x = center.x;
-		setLogo.y = center.y;
-		this.addChild(setLogo);
-		
+
+		Root.assets.playSound("Snaketris", 0, 9999);
+
+		var title:TextField = new TextField(490, 700, "Snaketris", "font");
+		title.fontSize = 100;
+		title.color = Color.WHITE;
+		title.x = center.x - 150;
+		title.y = -250;
+		this.addChild(title);
+
 		buttons = [new Image(Root.assets.getTexture("NewGame")), new Image(Root.assets.getTexture("Help")), new Image(Root.assets.getTexture("Credits"))];
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
-			//button.x = 0;
-			//button.y = 0;
-			button.x = 60;
-			button.y = 60  + (i * 60);
+			button.x = center.x - 80;
+			button.y = 200  + (i * 100);
 			this.addChild(button);
 		}
 		
@@ -60,32 +64,47 @@ class Main extends Sprite {
 		
 		transitionIn();
 	}
-	
-	private function handleInput(event:KeyboardEvent) {
+
+	private function handleInput(event:KeyboardEvent){
 		
-		if (event.keyCode == Keyboard.SPACE) {
+		if (event.keyCode == Keyboard.SPACE){
 		
 			if (selection == 0) {
-				// Start
-				
+				// NewGame
 				var game = new Game(rootSprite);
 				game.bgcolor = this.bgcolor;
 				game.startGame(rootSprite);
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+				Root.assets.removeSound("Snaketris");
 				transitionOut(function() {
 					this.removeFromParent();
 					this.dispose();
 				});
 			}
 			else if (selection == 1) {
-				// Credits
-				//var credits = new Credits(rootSprite);
-				//credits.bgcolor = this.bgcolor;
-				//credits.start();
+				// Help
+				var help = new Help(rootSprite);
+				help.bgcolor = this.bgcolor;
+				help.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+				Root.assets.removeSound("Snaketris");
 				transitionOut(function() {
 					this.removeFromParent();
 					this.dispose();
+				});
+
+			}
+			else if (selection == 2) {
+				// Credits
+				var credits = new Credits(rootSprite);
+				credits.bgcolor = this.bgcolor;
+				credits.start();
+				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+				Root.assets.removeSound("Snaketris");
+				transitionOut(function() {
+					this.removeFromParent();
+					this.dispose();
+
 				});
 
 			}
@@ -93,7 +112,7 @@ class Main extends Sprite {
 		else if (tween == null || tween.isComplete)
 		{	
 			// Only allow moving if the current tween does not exist.
-			if (event.keyCode == Keyboard.LEFT) {
+			if (event.keyCode == Keyboard.UP) {
 				Root.assets.playSound("SelectOption");
 				
 				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
@@ -108,7 +127,7 @@ class Main extends Sprite {
 				tween.animate("scaleY", 1.5);
 				Starling.juggler.add(tween);
 			}
-			else if (event.keyCode == Keyboard.RIGHT) {
+			else if (event.keyCode == Keyboard.DOWN) {
 				Root.assets.playSound("SelectOption");
 				
 				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
