@@ -9,6 +9,7 @@ import starling.animation.Tween;
 import starling.display.Image;
 import starling.text.TextField;
 import starling.text.BitmapFont;
+import starling.utils.Color;
 
 class Main extends Sprite {
 	
@@ -40,24 +41,27 @@ class Main extends Sprite {
 
 		Root.assets.playSound("Snaketris");
 
-		var title:TextField = new TextField(60, 60, "Snaketris", "font");
-		title.fontSize = BitmapFont.NATIVE_SIZE;
+		var title:TextField = new TextField(490, 700, "Snaketris", "font");
+		title.fontSize = 100;
 		title.color = Color.WHITE;
-		addChild(title);
+		title.x = center.x - 150;
+		title.y = -250;
 
+		this.addChild(title);
+/*
 		snakeLogo = new Image(Root.assets.getTexture("Title"));
 		var setLogo = snakeLogo;
 		setLogo.x = center.x;
 		setLogo.y = 10;
 		this.addChild(setLogo);
-		
+*/
 		buttons = [new Image(Root.assets.getTexture("NewGame")), new Image(Root.assets.getTexture("Help")), new Image(Root.assets.getTexture("Credits"))];
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
 			//button.x = 0;
 			//button.y = 0;
-			button.x = 60;
-			button.y = 60  + (i * 60);
+			button.x = center.x - 80;
+			button.y = 200  + (i * 100);
 			this.addChild(button);
 		}
 		

@@ -30,7 +30,7 @@ class Game extends Sprite
 		var stage = Starling.current.stage;
         var stageXCenter:Float = Starling.current.stage.stageWidth / 2;
         var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
-        snake = new Image(Root.assets.getTexture("Snake"));
+        //snake = new Image(Root.assets.getTexture("Snake"));
         this.rootSprite = root;
         snake.x = (Starling.current.stage.stageWidth / 2) - (snake.texture.width / 2);
         snake.y = (Starling.current.stage.stageHeight / 2) - (snake.texture.height / 2);
