@@ -62,9 +62,13 @@ class Main extends Sprite {
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
 			button.x = center.x - 80;
-			button.y = 200  + (i * 100);
+			button.y = 200  + (i * 150);
 			this.addChild(button);
 		}
+		
+		//Enlarge the first highlighted option by default
+		buttons[0].scaleX = 1.5;
+		buttons[0].scaleY = 1.5;
 		
 		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 		
