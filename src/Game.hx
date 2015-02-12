@@ -46,19 +46,16 @@ class Game extends Sprite
 			for(y in 0...sizeY)
 			{
 				if(y==2){
-					tile_bottom_red = new Image(Root.assets.getTexture("TileBottomRed"));
 					var tile_bottom_red = new Grid(Root.assets.getTexture("TileBottomRed"), left+x*32, top+y*32);
 					gridList.add(tile_bottom_red);
 					this.addChild(tile_bottom_red);
 				}
 				else if(y==3){
-					tile_top_red = new Image(Root.assets.getTexture("TileTopRed"));
 					var tile_top_red = new Grid(Root.assets.getTexture("TileTopRed"), left+x*32, top+y*32);
 					gridList.add(tile_top_red);
 					this.addChild(tile_top_red);
 				}
 				else{
-					tile = new Image(Root.assets.getTexture("Tile"));
 					var tile = new Grid(Root.assets.getTexture("Tile"), left+x*32, top+y*32);
 					gridList.add(tile);
 					this.addChild(tile);

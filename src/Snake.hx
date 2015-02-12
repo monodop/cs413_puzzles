@@ -1,4 +1,5 @@
 import starling.display.Sprite;
+import starling.std;
 
 class Snake extends Sprite {
 	
@@ -6,6 +7,8 @@ class Snake extends Sprite {
 	public var length:Int;				// The length of the snake
 	public var type:Int;				// The color of the snake
 	public var controllable:Bool;		// Whether the player is controlling the snake
+	public var sizeX = 8;
+	public var sizeY = 20;
 	
 	public function new(length, type) {
 		tiles = new List<SnakeTile>();
@@ -23,9 +26,14 @@ class Snake extends Sprite {
 			// Brand new snake. we need to place the snake
 			var s = new SnakeTile(type, this);
 			
-			// TODO: Place randomly in board at top
-			s.x = 0;
-			s.y = 0;
+			// Place randomly in board at top
+			var stage = Starling.current.stage;
+			var stageXCenter:Float = Starling.current.stage.stageWidth / 2;
+			var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
+			var left = stageXCenter - sizeX * 16;
+			//var top = stageYCenter - sizeY * 16;
+			s.x = random(left+sizeX+1:Int):Int;
+			//I don't think that we want this s.y = random(top+sizeY+1:Int):Int;
 			
 			this.addChild(s);
 			tiles.add(s);

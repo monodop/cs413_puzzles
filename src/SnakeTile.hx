@@ -4,6 +4,7 @@ class SnakeTile extends Tile {
 	
 	public var snake : Snake;	// The parent snake
 	public var type : Int;		// The color of the snake
+	var blue:Image;
 	
 	public function new(type, snake) {
 		this.x = 0;
