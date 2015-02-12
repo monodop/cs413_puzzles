@@ -8,6 +8,7 @@ import starling.animation.Tween;
 import starling.events.EnterFrameEvent;
 import flash.geom.Rectangle;
 import flash.geom.Point;
+import haxe.Timer;
 
 class Game extends Sprite
 {
@@ -19,8 +20,18 @@ class Game extends Sprite
 	var tile:Image;
 	var tile_top_red:Image;
 	var tile_bottom_red:Image;
-	var sizeX = 8;
-	var sizeY = 20;
+	
+	public var top : Float;
+	public var left : Float;
+	public var sizeX = 8;
+	public var sizeY = 20;
+	
+	public var objGrid : List<List<Tile>>;
+	public var nextSnake : Snake;
+	public var activeSnake : Snake;
+	
+	var gameClock:Timer;
+	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
 
@@ -38,8 +49,8 @@ class Game extends Sprite
         var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
 
         this.rootSprite = root;
-		var left = stageXCenter - sizeX * 16;
-		var top = stageYCenter - sizeY * 16;
+		left = stageXCenter - sizeX * 16;
+		top = stageYCenter - sizeY * 16;
  
 		for(x in 0...sizeX)
 		{
@@ -65,8 +76,20 @@ class Game extends Sprite
 		}
 		rootSprite.addChild(this);
 
+		nextSnake = Snake.generateRandom(this);
+		activeSnake = Snake.generateRandom(this);
+		
+		addChild(activeSnake);
+		trace(activeSnake.length);
+		
+		gameClock = new Timer(Std.int(1 / 5 * 1000));
+		gameClock.run = gameTick;
 
     }
+	
+	function gameTick() {
+		activeSnake.step();
+	}
 	
 	private function transitionIn(?callBack:Void->Void) {
 		

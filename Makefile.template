@@ -10,7 +10,7 @@ game.swf: $(SOURCES)
 	-cp src \
 	-cp vendor \
 	-swf-version 11.8 \
-	-swf-header 1024:768:60:000000 \
+	-swf-header 768:1024:60:000000 \
 	-main Startup \
 	-swf game.swf \
 	-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')" \
@@ -21,4 +21,4 @@ clean:
 	rm -rf game.swf *~ src/*~
 
 test: game.swf
-	$(ADL) -profile tv -screensize 1024x768:1024x768 game.xml
+	$(ADL) -profile tv -screensize 768x1024:768x1024 game.xml

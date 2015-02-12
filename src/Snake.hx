@@ -1,17 +1,21 @@
 import starling.display.Sprite;
-import starling.std;
+import starling.core.Starling;
 
 class Snake extends Sprite {
 	
-	public var tiles:List<SnakeTile>;	// The tiles within the snake
+	public var tiles:Array<SnakeTile>;	// The tiles within the snake
 	public var length:Int;				// The length of the snake
 	public var type:Int;				// The color of the snake
 	public var controllable:Bool;		// Whether the player is controlling the snake
 	public var sizeX = 8;
 	public var sizeY = 20;
 	
-	public function new(length, type) {
-		tiles = new List<SnakeTile>();
+	public var game:Game;
+	
+	public function new(game:Game, length:Int, type:Int) {
+        super();
+		this.game = game;
+		tiles = new Array<SnakeTile>();
 		this.x = 0;
 		this.y = 0;
 		this.length = length;
@@ -19,12 +23,21 @@ class Snake extends Sprite {
 		this.controllable = false;
 	}
 	
+	public static function generateRandom(game:Game) {
+		
+		var length = Std.random(5) + 4;
+		var type = Std.random(1);
+		
+		var s = new Snake(game, length, type);
+		return s;
+	}
+	
 	// Call this whenever the snake needs to run one "step"
 	public function step() {
 		
 		if (tiles.length == 0) {
 			// Brand new snake. we need to place the snake
-			var s = new SnakeTile(type, this);
+			var s = new SnakeTile(game, type, this, true);
 			
 			// Place randomly in board at top
 			var stage = Starling.current.stage;
@@ -32,29 +45,29 @@ class Snake extends Sprite {
 			var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
 			var left = stageXCenter - sizeX * 16;
 			//var top = stageYCenter - sizeY * 16;
-			s.x = random(left+sizeX+1:Int):Int;
+			s.x = Std.random(Std.int(left+sizeX+1));
 			//I don't think that we want this s.y = random(top+sizeY+1:Int):Int;
 			
 			this.addChild(s);
-			tiles.add(s);
+			tiles.push(s);
 			
 		} else if (tiles.length < length) {
 			// Existing snake. Place a new body piece
-			var s = new SnakeTile(type, this);
+			var s = new SnakeTile(game, type, this, false);
 			
 			// TODO: Place at top of board
 			s.x = tiles[tiles.length - 1].x;
 			s.y = 0;
 			
 			this.addChild(s);
-			tiles.add(s);
+			tiles.push(s);
 		}
 		
 		if (tiles[0].canMove()) {
 			
 			var head = tiles[0];
-			var tx = head.x;
-			var ty = head.y;
+			var tx = head.boardX;
+			var ty = head.boardY;
 			
 			// TODO: Map to left/right controls
 			var left = false;
@@ -75,10 +88,11 @@ class Snake extends Sprite {
 			} else
 				head.move();
 			
-			for (var x = 1; x < tiles.length; x++) {
-				var tx2 = tiles[x].x;
-				var ty2 = tiles[x].y;
+			for(x in 1...tiles.length) {
+				var tx2 = tiles[x].boardX;
+				var ty2 = tiles[x].boardY;
 				// TODO: Move tiles[x] from (tx2, ty2) to (tx, ty)
+				tiles[x].setPos(Std.int(tx), Std.int(ty));
 				tx = tx2;
 				ty = ty2;
 			}
