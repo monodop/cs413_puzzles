@@ -37,10 +37,17 @@ class Help extends Sprite {
 
         help.fontSize = 40;
         help.color = Color.GREEN;
-        help.x = 0;
+        help.x = -1200;
         help.y = 0;
         this.addChild(help);
         rootSprite.addChild(this);
+        sideTrans();
+    }
+
+    private function sideTrans(){
+        var helpTween = new Tween(help, 0.37, Transitions.LINEAR);
+        helpTween.animate("x", help.x + 1200);
+        Starling.juggler.add(helpTween);
     }
 
 

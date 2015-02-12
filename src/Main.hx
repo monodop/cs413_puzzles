@@ -1,4 +1,7 @@
-
+import flash.events.Event;
+import flash.media.Sound;
+import flash.media.SoundChannel;
+import flash.net.URLRequest;
 import flash.ui.Keyboard;
 import flash.geom.Vector3D;
 import starling.display.Sprite;
@@ -12,7 +15,6 @@ import starling.text.BitmapFont;
 import starling.utils.Color;
 import starling.events.KeyboardEvent;
 
-
 class Main extends Sprite {
 	
 	public var rootSprite:Sprite;
@@ -23,6 +25,10 @@ class Main extends Sprite {
 	private var transitionSpeed = 0.5;
 	private var tween:Tween;
 	public var bgcolor = 255;
+
+	public var sound:Sound = new Sound();
+	public var soundReq:URLRequest = new URLRequest("assets/Snaketris.mp3");
+	public var soundChannel:SoundChannel;
 
 	public function new(rootSprite:Sprite) {
 		this.rootSprite = rootSprite;
@@ -40,7 +46,11 @@ class Main extends Sprite {
 		this.scaleY = 8;
 
 		Root.assets.playSound("Snaketris", 0, 9999);
-
+		/*
+		sound.load(soundReq);
+		soundChannel = sound.play();
+		soundChannel.addEventListener(Event.SOUND_COMPLETE, soundLoop);
+		*/
 		var title:TextField = new TextField(490, 700, "Snaketris", "font");
 		title.fontSize = 100;
 		title.color = Color.WHITE;
@@ -64,7 +74,12 @@ class Main extends Sprite {
 		
 		transitionIn();
 	}
-
+	/*
+	private function soundLoop(evt:Event) {
+		soundChannel = sound.play();
+		soundChannel.addEventListener(Event.SOUND_COMPLETE, soundLoop);
+	}
+	*/
 	private function handleInput(event:KeyboardEvent){
 		
 		if (event.keyCode == Keyboard.SPACE){
@@ -88,7 +103,7 @@ class Main extends Sprite {
 				help.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 				Root.assets.removeSound("Snaketris");
-				transitionOut(function() {
+				helpTrans(function() {
 					this.removeFromParent();
 					this.dispose();
 				});
@@ -101,7 +116,7 @@ class Main extends Sprite {
 				credits.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 				Root.assets.removeSound("Snaketris");
-				transitionOut(function() {
+				creditTrans(function() {
 					this.removeFromParent();
 					this.dispose();
 
@@ -145,6 +160,24 @@ class Main extends Sprite {
 		}
 		
 	}
+	private function helpTrans(?callBack:Void->Void) {
+
+		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
+		t.animate("x", 1200);
+		//t.animate("scaleY", 10);
+		t.onComplete = callBack;
+		Starling.juggler.add(t);
+	}
+
+
+	private function transitionOut(?callBack:Void->Void) {
+
+		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
+		t.animate("scaleX", 10);
+		t.animate("scaleY", 10);
+		t.onComplete = callBack;
+		Starling.juggler.add(t);
+	}
 	
 	private function transitionIn(?callBack:Void->Void) {
 		
@@ -159,11 +192,10 @@ class Main extends Sprite {
 		Starling.juggler.add(t);
 	}
 	
-	private function transitionOut(?callBack:Void->Void) {
+	private function creditTrans(?callBack:Void->Void) {
 		
-		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
-		t.animate("scaleX", 8);
-		t.animate("scaleY", 8);
+		var t = new Tween(this, 4, Transitions.LINEAR);
+		t.animate("y", -170);
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
 	}
