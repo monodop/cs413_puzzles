@@ -16,7 +16,7 @@ class Help extends Sprite {
     public var rootSprite:Sprite;
     private var transitionSpeed = 0.5;
     public var bgcolor = 255;
-    public var help:TextField = new TextField(1024, 768, "How to play\n Control the falling snakes with the left and right arrow keys, when the snake is finished falling it will attempt to go left then right.  The objective is to collide into matching snake colors.  ", "font");
+    public var help:TextField = new TextField(768, 1024, "How to play\n \n Control the falling snakes\n with the left and right arrow keys. \n When the snake is finished falling,\n it will attempt to go left then right.\n The objective is to collide\n into matching snake colors.  ", "font");
 
     public function new(rootSprite:Sprite) {
         this.rootSprite = rootSprite;
