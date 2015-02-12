@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:c162bc84e6500de15b39673dd2104c31:4468c36a42126bd7c5b678d7e614addd:bee8c853525d9c517a700f50b4eb3b0e$ -->
+<!-- $TexturePacker:SmartUpdate:b051d7fc2aa9eee95c46bd90ccc0b2e6:1db74f62f139b435bb331e95af6b7cd8:a51e9fec0813520bcff14e9f4952fbca$ -->
 <TextureAtlas imagePath="SnaketrisSprites.png">
-    <SubTexture name="Credits" x="2" y="2" width="225" height="64"/>
-    <SubTexture name="Help" x="229" y="2" width="139" height="78"/>
-    <SubTexture name="NewGame" x="370" y="2" width="337" height="78"/>
-    <SubTexture name="SnakeBodyBlue" x="2" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeBodyGreen" x="36" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeBodyOrange" x="70" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeBodyPurple" x="104" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeBodyRed" x="138" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeBodyYellow" x="172" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeheadBlue" x="206" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeheadGreen" x="240" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeheadOrange" x="274" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeheadPurple" x="308" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeheadRed" x="342" y="82" width="32" height="32"/>
-    <SubTexture name="SnakeheadYellow" x="376" y="82" width="32" height="32"/>
+    <SubTexture name="Corner_Tile_Blue" x="2" y="2" width="32" height="32"/>
+    <SubTexture name="Corner_Tile_Green" x="36" y="2" width="32" height="32"/>
+    <SubTexture name="Corner_Tile_Orange" x="70" y="2" width="32" height="32"/>
+    <SubTexture name="Corner_Tile_Purple" x="104" y="2" width="32" height="32"/>
+    <SubTexture name="Corner_Tile_Red" x="138" y="2" width="32" height="32"/>
+    <SubTexture name="Corner_Tile_Yellow" x="172" y="2" width="32" height="32"/>
+    <SubTexture name="Credits" x="206" y="2" width="225" height="64"/>
+    <SubTexture name="Help" x="2" y="68" width="139" height="78"/>
+    <SubTexture name="NewGame" x="143" y="68" width="337" height="78"/>
+    <SubTexture name="SnakeBodyBlue" x="2" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeBodyGreen" x="36" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeBodyOrange" x="70" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeBodyPurple" x="104" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeBodyRed" x="138" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeBodyYellow" x="172" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeheadBlue" x="206" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeheadGreen" x="240" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeheadOrange" x="274" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeheadPurple" x="308" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeheadRed" x="342" y="148" width="32" height="32"/>
+    <SubTexture name="SnakeheadYellow" x="376" y="148" width="32" height="32"/>
+    <SubTexture name="Tile" x="410" y="148" width="32" height="32"/>
+    <SubTexture name="TileBottomRed" x="444" y="148" width="32" height="32"/>
+    <SubTexture name="TileTopRed" x="478" y="148" width="32" height="32"/>
+    <SubTexture name="Title" x="2" y="182" width="186" height="41" frameX="-1" frameY="-2" frameWidth="200" frameHeight="45"/>
+    <SubTexture name="blue" x="190" y="182" width="15" height="14"/>
+    <SubTexture name="green" x="207" y="182" width="15" height="14"/>
+    <SubTexture name="purple" x="224" y="182" width="15" height="14"/>
+    <SubTexture name="red" x="241" y="182" width="15" height="14"/>
+    <SubTexture name="yellow" x="258" y="182" width="15" height="14"/>
 </TextureAtlas>

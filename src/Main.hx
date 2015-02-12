@@ -198,8 +198,8 @@ class Main extends Sprite {
 	
 	private function creditTrans(?callBack:Void->Void) {
 		
-		var t = new Tween(this, 4, Transitions.LINEAR);
-		t.animate("y", -170);
+		var t = new Tween(this, 0.3, Transitions.LINEAR);
+		t.animate("y", -190);
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
 	}

@@ -71,6 +71,7 @@ class Credits extends Sprite {
 			Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 			this.removeFromParent();
 			this.dispose();
+
 			/*transitionOut(function() {
 				this.removeFromParent();
 				this.dispose();
