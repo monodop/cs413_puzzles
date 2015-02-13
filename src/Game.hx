@@ -157,8 +157,8 @@ class Game extends Sprite
 				if (tile.boardY < 3) {
 					// Lose
 					cleanup();
-					var menu = new Main(rootSprite);
-					menu.start();                
+					var gameover = new GameOver(rootSprite);
+					gameover.start();
 					transitionOut(function() {
 						this.removeFromParent();
 						this.dispose();
