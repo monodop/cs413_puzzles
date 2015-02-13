@@ -204,20 +204,6 @@ class Game extends Sprite
 				activeSnake.step(true);
 		} else {
 
-			for (i in 0...activeSnake.tiles.length) {
-				var tile = activeSnake.tiles[i];
-				if (tile.boardY < 3) {
-					// Lose
-					cleanup();
-					var gameover = new GameOver(rootSprite);
-					gameover.start();
-					transitionOut(function() {
-						this.removeFromParent();
-						this.dispose();
-					});
-				}
-			}
-		}
 			var makeNewSnake = true;
 			if (activeSnake.canMove()) {
 				activeSnake.step();
@@ -228,8 +214,8 @@ class Game extends Sprite
 					if (tile.boardY < 3) {
 						// Lose
 						cleanup();
-						var menu = new Main(rootSprite);
-						menu.start();                
+						var gameover = new GameOver(rootSprite);
+						gameover.start();           
 						transitionOut(function() {
 							this.removeFromParent();
 							this.dispose();
@@ -255,6 +241,8 @@ class Game extends Sprite
 				this.multiplier = 1;
 				updateScoreField();
 			}
+		}
+		
 		offTick = !offTick;
 	}
 	
