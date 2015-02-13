@@ -38,7 +38,7 @@ class Game extends Sprite
 	public var keyDown = false;
 	
 	var gameClock:Timer;
-	public var ticksPerSecond = 10;
+	var ticksPerSecond = 10;
 	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
@@ -63,6 +63,13 @@ class Game extends Sprite
 	public function new(root:Sprite)
 	{		
         super();
+	}
+	
+	public function cleanup() {
+		this.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		this.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+        this.removeEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
+		gameClock.stop();
 	}
 	
 	public function startGame(root:Sprite)
@@ -119,6 +126,13 @@ class Game extends Sprite
 
     }
 	
+	function changeTickRate(ticksPerSecond) {
+		this.ticksPerSecond = ticksPerSecond;
+		gameClock.stop;
+		gameClock = new Timer(Std.int(1 / ticksPerSecond * 1000));
+		gameClock.run = gameTick;
+	}
+	
 	function gameTick() {
 		
 		var makeNewSnake = true;
@@ -126,6 +140,20 @@ class Game extends Sprite
 		if (activeSnake.canMove()) {
 			activeSnake.step();
 			makeNewSnake = false;
+		} else {
+			for (i in 0...activeSnake.tiles.length) {
+				var tile = activeSnake.tiles[i];
+				if (tile.boardY < 3) {
+					// Lose
+					cleanup();
+					var menu = new Main(rootSprite);
+					menu.start();                
+					transitionOut(function() {
+						this.removeFromParent();
+						this.dispose();
+					});
+				}
+			}
 		}
 		
 		for (snake in liveSnakes) {
