@@ -29,12 +29,14 @@ class Root extends Sprite {
 		assets.enqueue("assets/EraseSnake.mp3");
 		assets.enqueue("assets/Crawl.mp3");
 		assets.enqueue("assets/GameOver.mp3");
+		assets.enqueue("assets/LevelUp.mp3");
 		assets.enqueue("assets/SelectOption.mp3");
 		assets.enqueue("assets/TouchGround.mp3");
         assets.enqueue("assets/Snake.png");
 		assets.enqueue("assets/Tile.png");
 		assets.enqueue("assets/TileBottomRed.png");
 		assets.enqueue("assets/TileTopRed.png");
+		assets.enqueue("assets/armor_block.png");
         assets.enqueue("assets/SnaketrisSprites.png");
         assets.enqueue("assets/SnaketrisSprites.xml");
         assets.enqueue("assets/background.png");

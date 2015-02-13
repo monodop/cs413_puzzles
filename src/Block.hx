@@ -12,13 +12,13 @@ class Block extends Sprite {
 	public function new(game:Game){
 		super();
 		this.game = game;
-		block = new BlockTile();
+		block = new BlockTile(game, 20);
 		this.x = 0;
 		this.y = 0;
 	}
 	
 	public function addBlock(){
-		var b = new BlockTile();
+		var b = new BlockTile(this.game, 20);
 		
 		var stage = Starling.current.stage;
 		var stageXCenter:Float = Starling.current.stage.stageWidth / 2;

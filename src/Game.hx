@@ -31,6 +31,7 @@ class Game extends Sprite
 	public var sizeX = 8;
 	public var sizeY = 20;
 	
+	public var blocks : List<BlockTile>;
 	public var objGrid : Array<Array<Tile>>;
 	public var nextSnake : Snake;
 	public var activeSnake : Snake;
@@ -51,9 +52,11 @@ class Game extends Sprite
 	public var ticksPerSecond = 10;
 	public var numberColors = 4;
 	public var maxLength = 5;
+	public var blockChance = 50; // 1 time per 50 seconds
+	public var blockDuration = 20; // block lasts 20 seconds
 	var offTick = false;
 	
-	var levelThresholds = [0, 1000, 2000, 5000, 10000, 15000, 20000, 50000];
+	var levelThresholds = [0, 1000, 3000, 6000, 12000, 18000, 25000, 50000];
 	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
@@ -99,23 +102,30 @@ class Game extends Sprite
 			case 1:
 				numberColors = 5;
 				maxLength = 6;
+				blockChance = 45;
 			case 2:
 				changeTickRate(12);
+				blockChance = 40;
 			case 3:
 				numberColors = 6;
 				changeTickRate(15);
 			case 4:
 				maxLength = 7;
 				changeTickRate(20);
+				blockChance = 30;
 			case 5:
 				numberColors = 7;
 				changeTickRate(25);
+				blockDuration = 30;
 			case 6:
 				numberColors = 8;
 				maxLength = 8;
+				blockChance = 25;
 			case 7:
 				changeTickRate(30);
+				blockDuration = 35;
 		}
+		Root.assets.playSound("LevelUp");
 	}
 	public function updateScoreField() {
 		scoreField.text = "Score: " + Std.string(this.score) +
@@ -151,6 +161,7 @@ class Game extends Sprite
 		this.addChild(scoreField);
 
 		objGrid = new Array<Array<Tile>>();
+		blocks = new List<BlockTile>();
  
 		for(x in 0...sizeX)
 		{
@@ -242,6 +253,41 @@ class Game extends Sprite
 				this.multiplier = 1;
 				updateScoreField();
 			}
+		}
+			
+		// Place blocks
+		var chance = Std.random(ticksPerSecond * blockChance);
+		if (chance == 1) {
+			// Create new block
+			// Determine location
+			
+			var xPos = 0;
+			var yPos = 0;
+			var valid = false;
+			var attempts = 1000; // prevent infinite loop?
+			while (attempts > 0) {
+				xPos = Std.random(sizeX);
+				yPos = Std.random(sizeY - 3) + 3;
+				
+				if (objGrid[xPos][yPos] == null) {
+					valid = true;
+					break;
+				}
+				
+				attempts--;
+			}
+			
+			if (valid) {
+				var block = new BlockTile(this, blockDuration);
+				block.setPos(xPos, yPos);
+				this.addChild(block);
+				blocks.add(block);
+			}
+		}
+		
+		// Degrade blocks
+		for (block in blocks) {
+			block.degrade(1 / ticksPerSecond);
 		}
 		
 		offTick = !offTick;
