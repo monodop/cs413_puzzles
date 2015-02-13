@@ -7,6 +7,9 @@ import starling.display.Stage;
 import starling.animation.Tween;
 import starling.events.EnterFrameEvent;
 import starling.events.KeyboardEvent;
+import starling.text.TextField;
+import starling.text.BitmapFont;
+import starling.utils.Color;
 import flash.ui.Keyboard;
 import flash.geom.Rectangle;
 import flash.geom.Point;
@@ -31,11 +34,13 @@ class Game extends Sprite
 	public var objGrid : Array<Array<Tile>>;
 	public var nextSnake : Snake;
 	public var activeSnake : Snake;
+	public var bg : Image;
 	
 	public var keyLeft = false;
 	public var keyRight = false;
 	public var keyDown = false;
-	
+
+	public var score:TextField = new TextField(490, 700, "Score:", "font");
 	var gameClock:Timer;
 	
 	public function onEnterFrame(event:EnterFrameEvent)
@@ -68,15 +73,21 @@ class Game extends Sprite
 		var stage = Starling.current.stage;
         var stageXCenter:Float = Starling.current.stage.stageWidth / 2;
         var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
-		
+
 		this.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		this.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
         this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
-
+		bg = new Image(Root.assets.getTexture("background"));
+		this.addChild(bg);
         this.rootSprite = root;
 		left = stageXCenter - sizeX * 16;
 		top = stageYCenter - sizeY * 16;
-		
+		score.x = -100;
+		score.y = -300;
+		score.fontSize = 35;
+		score.color = 0xFF6600;
+		this.addChild(score);
+
 		objGrid = new Array<Array<Tile>>();
  
 		for(x in 0...sizeX)
@@ -142,6 +153,5 @@ class Game extends Sprite
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
 	}
-	
 
 }

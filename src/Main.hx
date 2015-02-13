@@ -26,6 +26,8 @@ class Main extends Sprite {
 	private var transitionSpeed = 0.5;
 	private var tween:Tween;
 	public var bgcolor = 255;
+	public var bg:Image;
+	public var center = new Vector3D(Starling.current.stage.stageWidth / 2.5, Starling.current.stage.stageHeight / 2.5);
 
 	public var sound:Sound = new Sound();
 	public var soundReq:URLRequest = new URLRequest("assets/Snaketris.mp3");
@@ -38,13 +40,16 @@ class Main extends Sprite {
 	
 	public function start() {
 		
-		var center = new Vector3D(Starling.current.stage.stageWidth / 2.5, Starling.current.stage.stageHeight / 2.5);
+
 		this.pivotX = center.x;
 		this.pivotY = center.y;
 		this.x = center.x;
 		this.y = center.y;
 		this.scaleX = 8;
 		this.scaleY = 8;
+
+		bg = new Image(Root.assets.getTexture("background"));
+
 
 		Root.assets.playSound("Snaketris", 0, 9999);
 		/*
@@ -54,9 +59,10 @@ class Main extends Sprite {
 		*/
 		title = new Image(Root.assets.getTexture("Title"));
 		title.x = center.x - 200;
-		title.y = center.y - 200;
+		title.y = center.y - 300;
 		title.scaleX = 3;
 		title.scaleY = 3;
+		this.addChild(bg);
 		this.addChild(title);
 		/*
 		var title:TextField = new TextField(490, 700, "Snaketris", "font");
@@ -70,7 +76,7 @@ class Main extends Sprite {
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
 			button.x = center.x - 200;
-			button.y = 400  + (i * 150);
+			button.y = 300  + (i * 150);
 			this.addChild(button);
 		}
 		
@@ -85,6 +91,7 @@ class Main extends Sprite {
 		rootSprite.addChild(this);
 		startAnim();
 		transitionIn();
+
 	}
 	/*
 	private function soundLoop(evt:Event) {
@@ -175,21 +182,6 @@ class Main extends Sprite {
 		toLeft();
 
 	}
-	private function pulse(){
-		var t = new Tween(buttons[selection], 0.619, Transitions.EASE_IN_OUT);
-		t.animate("scaleX", 1.1);
-		t.animate("scaleY", 1.1);
-		t.onComplete = pulse2;
-		Starling.juggler.add(t);
-	}
-	private function pulse2(){
-		var t = new Tween(buttons[0], 0.619, Transitions.EASE_IN_OUT);
-		t.animate("scaleX", 1);
-		t.animate("scaleY", 1);
-		t.onComplete = pulse;
-		Starling.juggler.add(t);
-	}
-
 
 	private function toLeft(){
 		var t = new Tween(title, 0.619, Transitions.EASE_IN_OUT);
@@ -217,10 +209,10 @@ class Main extends Sprite {
 	private function transitionOut(?callBack:Void->Void) {
 
 		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
-		t.animate("scaleX", 10);
-		t.animate("scaleY", 10);
+		t.animate("x", 1000);
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
+
 	}
 	
 	private function transitionIn(?callBack:Void->Void) {
@@ -239,7 +231,7 @@ class Main extends Sprite {
 	private function creditTrans(?callBack:Void->Void) {
 		
 		var t = new Tween(this, 0.3, Transitions.LINEAR);
-		t.animate("y", -190);
+		t.animate("y", -300);
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
 	}
