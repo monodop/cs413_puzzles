@@ -47,7 +47,7 @@ class Game extends Sprite
 	public var highScore = 0;
 	public var level = 0;
 
-	public var scoreField:TextField = new TextField(490, 700, "Score: 0\nMult: 1x\nLevel: 0", "Verdana");
+	public var scoreField:TextField = new TextField(490, 700, "Score: 0\nMult: 1x\nLevel: 0", "font");
 	var gameClock:Timer;
 	public var ticksPerSecond = 10;
 	public var numberColors = 4;
@@ -226,7 +226,7 @@ class Game extends Sprite
 						// Lose
 						cleanup();
 
-						var gameover = new GameOver(rootSprite);
+						var gameover = new GameOver(rootSprite, this.score);
 						
 						gameover.start();
 						transitionOut(function() {

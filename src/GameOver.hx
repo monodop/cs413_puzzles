@@ -21,15 +21,15 @@ class GameOver extends Sprite {
     private var transitionSpeed = 1.0;
     public var bgcolor = 255;
     public var gameover:TextField = new TextField(400, 900, "Game Over!", "font");
-    public function new(rootSprite:Sprite) {
+	var score : Int;
+    public function new(rootSprite:Sprite, score:Int) {
         this.rootSprite = rootSprite;
+		this.score = score;
         super();
     }
 
     public function start() {
-        var st:SoundTransform = new SoundTransform(1, 0);
-        var sc:SoundChannel = Root.assets.playSound("Dead");
-        sc.soundTransform = st;
+        Root.assets.playSound("Dead");
         var center = new Vector3D(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
         this.pivotX = center.x;
         this.pivotY = center.y;
@@ -45,6 +45,7 @@ class GameOver extends Sprite {
         gameover.color = 0x66FF33;
         gameover.x = center.x - 200;
         gameover.y = 0;
+		gameover.text = "Game Over!\nFinal Score:\n" + Std.string(score);
         this.addChild(gameover);
         rootSprite.addChild(this);
         pulse();
