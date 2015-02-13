@@ -20,6 +20,7 @@ class Main extends Sprite {
 	public var rootSprite:Sprite;
 	private var selection:Int;
 	private var buttons:Array<Image>;
+	private var title:Image;
 	private var snakeLogo:Image;
 	private var rotateSpeed = 0.3;
 	private var transitionSpeed = 0.5;
@@ -51,18 +52,25 @@ class Main extends Sprite {
 		soundChannel = sound.play();
 		soundChannel.addEventListener(Event.SOUND_COMPLETE, soundLoop);
 		*/
+		title = new Image(Root.assets.getTexture("Title"));
+		title.x = center.x - 200;
+		title.y = center.y - 200;
+		title.scaleX = 3;
+		title.scaleY = 3;
+		this.addChild(title);
+		/*
 		var title:TextField = new TextField(490, 700, "Snaketris", "font");
 		title.fontSize = 100;
 		title.color = Color.WHITE;
 		title.x = center.x - 150;
 		title.y = -250;
 		this.addChild(title);
-
+		*/
 		buttons = [new Image(Root.assets.getTexture("NewGame")), new Image(Root.assets.getTexture("Help")), new Image(Root.assets.getTexture("Credits"))];
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
-			button.x = center.x - 80;
-			button.y = 200  + (i * 150);
+			button.x = center.x - 200;
+			button.y = 300  + (i * 150);
 			this.addChild(button);
 		}
 		
@@ -75,7 +83,7 @@ class Main extends Sprite {
 		selection = 0;
 		
 		rootSprite.addChild(this);
-		
+		startAnim();
 		transitionIn();
 	}
 	/*
@@ -138,9 +146,9 @@ class Main extends Sprite {
 				tween.animate("scaleX", 1.0);
 				tween.animate("scaleY", 1.0);
 				Starling.juggler.add(tween);
-				
+
 				selection = arithMod(--selection, buttons.length);
-				
+
 				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
 				tween.animate("scaleX", 1.5);
 				tween.animate("scaleY", 1.5);
@@ -148,21 +156,53 @@ class Main extends Sprite {
 			}
 			else if (event.keyCode == Keyboard.DOWN) {
 				Root.assets.playSound("SelectOption");
-				
+
 				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
 				tween.animate("scaleX", 1.0);
 				tween.animate("scaleY", 1.0);
 				Starling.juggler.add(tween);
-				
+
 				selection = arithMod(++selection, buttons.length);
 				
-				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT); 
+				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
 				tween.animate("scaleX", 1.5);
 				tween.animate("scaleY", 1.5);
 				Starling.juggler.add(tween);
 			}
 		}
-		
+	}
+	private function startAnim(){
+		toLeft();
+
+	}
+	private function pulse(){
+		var t = new Tween(buttons[selection], 0.619, Transitions.EASE_IN_OUT);
+		t.animate("scaleX", 1.1);
+		t.animate("scaleY", 1.1);
+		t.onComplete = pulse2;
+		Starling.juggler.add(t);
+	}
+	private function pulse2(){
+		var t = new Tween(buttons[0], 0.619, Transitions.EASE_IN_OUT);
+		t.animate("scaleX", 1);
+		t.animate("scaleY", 1);
+		t.onComplete = pulse;
+		Starling.juggler.add(t);
+	}
+
+
+	private function toLeft(){
+		var t = new Tween(title, 0.619, Transitions.EASE_IN_OUT);
+		t.animate("x", title.x - 80);
+		t.onComplete = toRight;
+		Starling.juggler.add(t);
+	}
+
+	private function toRight(){
+		var t = new Tween(title, 0.619, Transitions.EASE_IN_OUT);
+		t.animate("x", title.x + 80);
+		t.onComplete = toLeft;
+		Starling.juggler.add(t);
 	}
 	private function helpTrans(?callBack:Void->Void) {
 
