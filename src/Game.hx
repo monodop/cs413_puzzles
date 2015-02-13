@@ -6,6 +6,8 @@ import starling.animation.Transitions;
 import starling.display.Stage;
 import starling.animation.Tween;
 import starling.events.EnterFrameEvent;
+import starling.events.KeyboardEvent;
+import flash.ui.Keyboard;
 import flash.geom.Rectangle;
 import flash.geom.Point;
 import haxe.Timer;
@@ -26,9 +28,13 @@ class Game extends Sprite
 	public var sizeX = 8;
 	public var sizeY = 20;
 	
-	public var objGrid : List<List<Tile>>;
+	public var objGrid : Array<Array<Tile>>;
 	public var nextSnake : Snake;
 	public var activeSnake : Snake;
+	
+	public var keyLeft = false;
+	public var keyRight = false;
+	public var keyDown = false;
 	
 	var gameClock:Timer;
 	
@@ -36,9 +42,24 @@ class Game extends Sprite
 	{
 
 	}
+	public function onKeyDown(event:KeyboardEvent) {
+		if (event.keyCode == Keyboard.LEFT)
+			keyLeft = true;
+		else if (event.keyCode == Keyboard.RIGHT)
+			keyRight = true;
+		else if (event.keyCode == Keyboard.DOWN)
+			keyDown = true;
+	}
+	public function onKeyUp(event:KeyboardEvent) {
+		if (event.keyCode == Keyboard.LEFT)
+			keyLeft = false;
+		else if (event.keyCode == Keyboard.RIGHT)
+			keyRight = false;
+		else if (event.keyCode == Keyboard.DOWN)
+			keyDown = false;
+	}
 	public function new(root:Sprite)
 	{		
-        this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
         super();
 	}
 	
@@ -47,17 +68,24 @@ class Game extends Sprite
 		var stage = Starling.current.stage;
         var stageXCenter:Float = Starling.current.stage.stageWidth / 2;
         var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
+		
+		this.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		this.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+        this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 
         this.rootSprite = root;
 		left = stageXCenter - sizeX * 16;
 		top = stageYCenter - sizeY * 16;
+		
+		objGrid = new Array<Array<Tile>>();
  
 		for(x in 0...sizeX)
 		{
+			var col = new Array<Tile>();
 			for(y in 0...sizeY)
 			{
 				if(y==2){
-					var tile_bottom_red = new Grid(Root.assets.getTexture("TileBottomRed"), left+x*32, top+y*32);
+					var tile_bottom_red = new Grid(Root.assets.getTexture("TileBottomRed"), left + x * 32, top + y * 32);
 					gridList.add(tile_bottom_red);
 					this.addChild(tile_bottom_red);
 				}
@@ -70,19 +98,21 @@ class Game extends Sprite
 					var tile = new Grid(Root.assets.getTexture("Tile"), left+x*32, top+y*32);
 					gridList.add(tile);
 					this.addChild(tile);
-					}
+				}
+				col.push(null);
 			}
+			objGrid.push(col);
 		
 		}
 		rootSprite.addChild(this);
 
 		nextSnake = Snake.generateRandom(this);
 		activeSnake = Snake.generateRandom(this);
+		activeSnake.controllable = true;
 		
 		addChild(activeSnake);
-		trace(activeSnake.length);
 		
-		gameClock = new Timer(Std.int(1 / 5 * 1000));
+		gameClock = new Timer(Std.int(1 / 4 * 1000));
 		gameClock.run = gameTick;
 
     }

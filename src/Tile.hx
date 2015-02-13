@@ -16,9 +16,11 @@ class Tile extends Sprite {
 	}
 	
 	public function setPos(x:Int, y:Int) {
+		game.objGrid[this.boardX][this.boardY] = null;
 		this.boardX = x;
 		this.boardY = y;
 		this.x = game.left + x * 32;
-		this.y = game.top  - y * 32;
+		this.y = game.top  + y * 32;
+		game.objGrid[this.boardX][this.boardY] = this;
 	}
 }

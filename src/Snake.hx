@@ -70,8 +70,8 @@ class Snake extends Sprite {
 			var ty = head.boardY;
 			
 			// TODO: Map to left/right controls
-			var left = false;
-			var right = false;
+			var left = game.keyLeft;
+			var right = game.keyRight;
 			
 			if (controllable) {
 				var canMoveLeft = head.canMoveLeft();
@@ -92,7 +92,14 @@ class Snake extends Sprite {
 				var tx2 = tiles[x].boardX;
 				var ty2 = tiles[x].boardY;
 				// TODO: Move tiles[x] from (tx2, ty2) to (tx, ty)
-				tiles[x].setPos(Std.int(tx), Std.int(ty));
+					
+				if (tx > tx2)
+					tiles[x].moveRight(tiles[x-1]);
+				else if (tx < tx2)
+					tiles[x].moveLeft(tiles[x-1]);
+				else
+					tiles[x].moveDown(tiles[x-1]);
+				//tiles[x].setPos(Std.int(tx), Std.int(ty));
 				tx = tx2;
 				ty = ty2;
 			}
