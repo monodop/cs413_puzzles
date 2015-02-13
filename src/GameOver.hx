@@ -22,9 +22,11 @@ class GameOver extends Sprite {
     public var bgcolor = 255;
     public var gameover:TextField = new TextField(400, 900, "Game Over!", "font");
 	var score : Int;
-    public function new(rootSprite:Sprite, score:Int) {
+	var highScore : Int;
+    public function new(rootSprite:Sprite, score:Int, highScore:Int) {
         this.rootSprite = rootSprite;
 		this.score = score;
+		this.highScore = highScore;
         super();
     }
 
@@ -47,6 +49,11 @@ class GameOver extends Sprite {
         gameover.y = 0;
 		gameover.text = "Game Over!\nFinal Score:\n" + Std.string(score);
         this.addChild(gameover);
+		
+		if(score > highScore){
+			highScore = score;
+		}
+		
         rootSprite.addChild(this);
         pulse();
 
@@ -57,7 +64,7 @@ class GameOver extends Sprite {
         if (event.keyCode == Keyboard.SPACE) {
 
 // Return
-            var menu = new Main(rootSprite);
+            var menu = new Main(rootSprite, highScore);
             menu.bgcolor = this.bgcolor;
             menu.start();
             Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);

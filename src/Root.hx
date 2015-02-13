@@ -10,6 +10,7 @@ class Root extends Sprite {
 
     public static var assets:AssetManager;
     public var rootSprite:Sprite;
+	public var highScore:Int;
 
 	public static function init() {
 		
@@ -48,11 +49,10 @@ class Root extends Sprite {
 		
         assets.loadQueue(function onProgress(ratio:Float) {
             haxe.Log.clear();
-            trace(ratio);
             if (ratio == 1) {
                 haxe.Log.clear();
                 startup.removeChild(startup.loadingBitmap);
-                var menu = new Main(rootSprite);
+                var menu = new Main(rootSprite, highScore);
                 menu.start();                
             }
 

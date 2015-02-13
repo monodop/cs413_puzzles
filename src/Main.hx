@@ -14,6 +14,7 @@ import starling.text.TextField;
 import starling.text.BitmapFont;
 import starling.utils.Color;
 import starling.events.KeyboardEvent;
+import Std;
 
 class Main extends Sprite {
 	
@@ -28,13 +29,16 @@ class Main extends Sprite {
 	public var bgcolor = 255;
 	public var bg:Image;
 	public var center = new Vector3D(Starling.current.stage.stageWidth / 2.5, Starling.current.stage.stageHeight / 2.5);
+	private var highScore:Int = 10000;
+	public var highScore_rcrd:TextField;
 
 	public var sound:Sound = new Sound();
 	public var soundReq:URLRequest = new URLRequest("assets/Snaketris.mp3");
 	public var soundChannel:SoundChannel;
 
-	public function new(rootSprite:Sprite) {
+	public function new(rootSprite:Sprite, highScore:Int) {
 		this.rootSprite = rootSprite;
+		this.highScore = highScore;
 		super();
 	}
 	
@@ -84,6 +88,14 @@ class Main extends Sprite {
 		buttons[0].scaleX = 1.5;
 		buttons[0].scaleY = 1.5;
 		
+		highScore_rcrd = new TextField(500, 500, "Game Over!", "font");
+		highScore_rcrd.text = "High Score:\n" + Std.string(highScore);
+		highScore_rcrd.x = center.x - 150;
+		highScore_rcrd.y = center.y + 150;
+		highScore_rcrd.fontSize = 24;
+        highScore_rcrd.color = 0x66FF33;
+		this.addChild(highScore_rcrd);
+		
 		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 		
 		selection = 0;
@@ -105,7 +117,7 @@ class Main extends Sprite {
 		
 			if (selection == 0) {
 				// NewGame
-				var game = new Game(rootSprite);
+				var game = new Game(rootSprite, highScore);
 				game.bgcolor = this.bgcolor;
 				game.startGame(rootSprite);
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
@@ -117,7 +129,7 @@ class Main extends Sprite {
 			}
 			else if (selection == 1) {
 				// Help
-				var help = new Help(rootSprite);
+				var help = new Help(rootSprite, highScore);
 				help.bgcolor = this.bgcolor;
 				help.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
@@ -130,7 +142,7 @@ class Main extends Sprite {
 			}
 			else if (selection == 2) {
 				// Credits
-				var credits = new Credits(rootSprite);
+				var credits = new Credits(rootSprite, highScore);
 				credits.bgcolor = this.bgcolor;
 				credits.start();
 				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);

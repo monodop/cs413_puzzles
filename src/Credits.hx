@@ -14,12 +14,14 @@ import starling.utils.Color;
 class Credits extends Sprite {
 	
 	public var rootSprite:Sprite;
+	public var highScore:Int;
 	public var bg:Image;
 	private var transitionSpeed = 0.5;
 	public var bgcolor = 255;
 	public var credits:TextField = new TextField(400, 900, "Sean Baquiro\n\nJack Burell\n\nKyle Granchelli\n\nHarrison Lambeth\n\nDavid Terry", "font");
-	public function new(rootSprite:Sprite) {
+	public function new(rootSprite:Sprite, highScore:Int) {
 		this.rootSprite = rootSprite;
+		this.highScore = highScore;
 		super();
 	}
 	
@@ -64,7 +66,7 @@ class Credits extends Sprite {
 		if (event.keyCode == Keyboard.SPACE) {
 		
 			// Return
-			var menu = new Main(rootSprite);
+			var menu = new Main(rootSprite, highScore);
 			menu.bgcolor = this.bgcolor;
 			menu.start();
 			Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);

@@ -13,8 +13,7 @@ game.swf: $(SOURCES)
 	-swf-header 768:1024:60:000000 \
 	-main Startup \
 	-swf game.swf \
-	-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')" \
-	-debug
+	-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')" 
 
 clean:
 	del game.swf

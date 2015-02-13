@@ -78,8 +78,9 @@ class Game extends Sprite
 		else if (event.keyCode == Keyboard.DOWN)
 			keyDown = false;
 	}
-	public function new(root:Sprite)
+	public function new(root:Sprite, highScore:Int)
 	{		
+		this.highScore = highScore;
         super();
 	}
 	
@@ -226,7 +227,7 @@ class Game extends Sprite
 						// Lose
 						cleanup();
 
-						var gameover = new GameOver(rootSprite, this.score);
+						var gameover = new GameOver(rootSprite, this.score, this.highScore);
 						
 						gameover.start();
 						transitionOut(function() {

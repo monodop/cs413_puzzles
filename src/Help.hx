@@ -14,13 +14,15 @@ import starling.utils.Color;
 class Help extends Sprite {
 
     public var rootSprite:Sprite;
+	public var highScore:Int;
     private var transitionSpeed = 0.5;
     public var bgcolor = 255;
     public var bg:Image;
     public var help:TextField = new TextField(768, 1024, "How to play\n \n Control the falling snakes\n with the left and right arrow keys. \n When the snake is finished falling,\n it will attempt to go left then right.\n The objective is to collide\n into matching snake colors.  ", "font");
 
-    public function new(rootSprite:Sprite) {
+    public function new(rootSprite:Sprite, highScore:Int) {
         this.rootSprite = rootSprite;
+		this.highScore = highScore;
         super();
     }
 
@@ -62,7 +64,7 @@ class Help extends Sprite {
         if (event.keyCode == Keyboard.SPACE) {
 
             // Return
-            var menu = new Main(rootSprite);
+            var menu = new Main(rootSprite, highScore);
             menu.bgcolor = this.bgcolor;
             menu.start();
             Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
