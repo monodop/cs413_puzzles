@@ -15,19 +15,16 @@ class Credits extends Sprite {
 	
 	public var rootSprite:Sprite;
 	public var bg:Image;
-	
 	private var transitionSpeed = 0.5;
 	public var bgcolor = 255;
-
 	public var credits:TextField = new TextField(400, 900, "Sean Baquiro\n\nJack Burell\n\nKyle Granchelli\n\nHarrison Lambeth\n\nDavid Terry", "font");
-	
 	public function new(rootSprite:Sprite) {
 		this.rootSprite = rootSprite;
 		super();
 	}
 	
 	public function start() {
-		
+
 		var center = new Vector3D(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
 		this.pivotX = center.x;
 		this.pivotY = center.y;
