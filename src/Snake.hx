@@ -116,6 +116,8 @@ class Snake extends Sprite {
 		this.removeFromParent();
 		this.dispose();
 		
+		// TODO: Modify score?
+		
 	}
 	
 	public function canMove() : Bool {

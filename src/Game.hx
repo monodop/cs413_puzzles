@@ -121,20 +121,30 @@ class Game extends Sprite
 	
 	function gameTick() {
 		
-		if(activeSnake.canMove())
+		var makeNewSnake = true;
+		
+		if (activeSnake.canMove()) {
 			activeSnake.step();
-		else {
+			makeNewSnake = false;
+		}
+		
+		for (snake in liveSnakes) {
+			if (snake.canMove()) {
+				snake.step();
+				makeNewSnake = false;
+			}
+		}
+		
+		if(makeNewSnake){
 			activeSnake.controllable = false;
 			liveSnakes.add(activeSnake);
 			activeSnake = nextSnake;
 			this.addChild(activeSnake);
 			nextSnake = Snake.generateRandom(this);
+			
+			// TODO: Reset multiplier
 		}
 		
-		for (snake in liveSnakes) {
-			if (snake.canMove())
-				snake.step();
-		}
 	}
 	
 	private function transitionIn(?callBack:Void->Void) {
