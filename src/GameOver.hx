@@ -27,7 +27,7 @@ class GameOver extends Sprite {
     }
 
     public function start() {
-        var st:SoundTransform = new SoundTransform(0.25, 0);
+        var st:SoundTransform = new SoundTransform(1, 0);
         var sc:SoundChannel = Root.assets.playSound("Dead");
         sc.soundTransform = st;
         var center = new Vector3D(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
