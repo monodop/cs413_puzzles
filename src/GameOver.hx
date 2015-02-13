@@ -10,6 +10,9 @@ import starling.display.Image;
 import starling.text.TextField;
 import starling.text.BitmapFont;
 import starling.utils.Color;
+import flash.media.SoundChannel;
+import flash.media.Sound;
+import flash.media.SoundTransform;
 
 class GameOver extends Sprite {
 
@@ -24,7 +27,9 @@ class GameOver extends Sprite {
     }
 
     public function start() {
-
+        var st:SoundTransform = new SoundTransform(0.25, 0);
+        var sc:SoundChannel = Root.assets.playSound("Dead");
+        sc.soundTransform = st;
         var center = new Vector3D(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
         this.pivotX = center.x;
         this.pivotY = center.y;

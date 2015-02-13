@@ -225,6 +225,7 @@ class Game extends Sprite
 					if (tile.boardY < 3) {
 						// Lose
 						cleanup();
+
 						var gameover = new GameOver(rootSprite);
 						
 						gameover.start();
