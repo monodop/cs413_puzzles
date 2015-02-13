@@ -27,9 +27,12 @@ class SnakeTile extends Tile {
 		this.tileType = "Snake";
 		this.isHead = isHead;
 		
-		this.texHead = Root.assets.getTexture("SnakeheadBlue");
-		this.texStraight = Root.assets.getTexture("SnakeBodyBlue");
-		this.texCorner = Root.assets.getTexture("Corner_Tile_Blue");
+		var colorLookup = ["Blue", "Green", "Orange", "Purple", "Red", "Yellow"];
+		var color = colorLookup[type];
+		
+		this.texHead = Root.assets.getTexture("Snakehead" + color);
+		this.texStraight = Root.assets.getTexture("SnakeBody" + color);
+		this.texCorner = Root.assets.getTexture("Corner_Tile_" + color);
 		
 		this.direction = Direction.DOWN;
 		
@@ -154,10 +157,43 @@ class SnakeTile extends Tile {
 	
 	public function checkClearing() {
 		// TODO: Get tiles left, right, up, down from snake
-		var left;
-		var right;
-		var down;
-		var up;
+		
+		var left:Tile = null;
+		var right:Tile = null;
+		var down:Tile = null;
+		var up:Tile = null;
+		
+		if(boardX > 0)
+			left = game.objGrid[boardX - 1][boardY];
+		if (boardX < game.sizeX - 1)
+			right = game.objGrid[boardX + 1][boardY];
+			
+		if(boardY > 0)
+			up = game.objGrid[boardX][boardY - 1];
+		if (boardY < game.sizeY - 1)
+			down = game.objGrid[boardX][boardY + 1];
+		
+		if (left != null && Std.is(left, SnakeTile)) {
+			var s : SnakeTile = cast left;
+			if (s.snake != this.snake && s.snake.type == this.type)
+				s.snake.clear();
+		}
+		if (right != null && Std.is(right, SnakeTile)) {
+			var s : SnakeTile = cast right;
+			if (s.snake != this.snake && s.snake.type == this.type)
+				s.snake.clear();
+		}
+		if (down != null && Std.is(down, SnakeTile)) {
+			var s : SnakeTile = cast down;
+			if (s.snake != this.snake && s.snake.type == this.type)
+				s.snake.clear();
+		}
+		if (up != null && Std.is(up, SnakeTile)) {
+			var s : SnakeTile = cast up;
+			if (s.snake != this.snake && s.snake.type == this.type)
+				s.snake.clear();
+		}
+			
 		
 		// TODO: Destroy snakes adjacent similarly colored snakes to this one.
 	}

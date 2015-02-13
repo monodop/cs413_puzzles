@@ -35,6 +35,7 @@ class Game extends Sprite
 	public var nextSnake : Snake;
 	public var activeSnake : Snake;
 	public var bg : Image;
+	public var liveSnakes : List<Snake>;
 	
 	public var keyLeft = false;
 	public var keyRight = false;
@@ -42,6 +43,7 @@ class Game extends Sprite
 
 	public var score:TextField = new TextField(490, 700, "Score:", "font");
 	var gameClock:Timer;
+	var ticksPerSecond = 10;
 	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
@@ -66,6 +68,13 @@ class Game extends Sprite
 	public function new(root:Sprite)
 	{		
         super();
+	}
+	
+	public function cleanup() {
+		this.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		this.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+        this.removeEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
+		gameClock.stop();
 	}
 	
 	public function startGame(root:Sprite)
@@ -119,17 +128,62 @@ class Game extends Sprite
 
 		nextSnake = Snake.generateRandom(this);
 		activeSnake = Snake.generateRandom(this);
-		activeSnake.controllable = true;
+		liveSnakes = new List<Snake>();
 		
 		addChild(activeSnake);
 		
-		gameClock = new Timer(Std.int(1 / 4 * 1000));
+		gameClock = new Timer(Std.int(1 / ticksPerSecond * 1000));
 		gameClock.run = gameTick;
 
     }
 	
+	function changeTickRate(ticksPerSecond) {
+		this.ticksPerSecond = ticksPerSecond;
+		gameClock.stop;
+		gameClock = new Timer(Std.int(1 / ticksPerSecond * 1000));
+		gameClock.run = gameTick;
+	}
+	
 	function gameTick() {
-		activeSnake.step();
+		
+		var makeNewSnake = true;
+		
+		if (activeSnake.canMove()) {
+			activeSnake.step();
+			makeNewSnake = false;
+		} else {
+			for (i in 0...activeSnake.tiles.length) {
+				var tile = activeSnake.tiles[i];
+				if (tile.boardY < 3) {
+					// Lose
+					cleanup();
+					var menu = new Main(rootSprite);
+					menu.start();                
+					transitionOut(function() {
+						this.removeFromParent();
+						this.dispose();
+					});
+				}
+			}
+		}
+		
+		for (snake in liveSnakes) {
+			if (snake.canMove()) {
+				snake.step();
+				makeNewSnake = false;
+			}
+		}
+		
+		if(makeNewSnake){
+			activeSnake.controllable = false;
+			liveSnakes.add(activeSnake);
+			activeSnake = nextSnake;
+			this.addChild(activeSnake);
+			nextSnake = Snake.generateRandom(this);
+			
+			// TODO: Reset multiplier
+		}
+		
 	}
 	
 	private function transitionIn(?callBack:Void->Void) {
