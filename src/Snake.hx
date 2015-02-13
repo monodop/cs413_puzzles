@@ -28,8 +28,8 @@ class Snake extends Sprite {
 	
 	public static function generateRandom(game:Game) {
 		
-		var length = Std.random(5) + 4;
-		var type = Std.random(8);
+		var length = Std.random(game.maxLength - 4) + 4;
+		var type = Std.random(game.numberColors);
 		
 		var s = new Snake(game, length, type);
 		return s;

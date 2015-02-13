@@ -44,11 +44,16 @@ class Game extends Sprite
 	public var multiplier = 1;
 	public var score = 0;
 	public var highScore = 0;
+	public var level = 0;
 
-	public var scoreField:TextField = new TextField(490, 700, "Score: 0\nMult: 1x", "Verdana");
+	public var scoreField:TextField = new TextField(490, 700, "Score: 0\nMult: 1x\nLevel: 0", "Verdana");
 	var gameClock:Timer;
-	var ticksPerSecond = 20;
+	public var ticksPerSecond = 10;
+	public var numberColors = 4;
+	public var maxLength = 5;
 	var offTick = false;
+	
+	var levelThresholds = [0, 1000, 2000, 5000, 10000, 15000, 20000, 50000];
 	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
@@ -79,10 +84,43 @@ class Game extends Sprite
 		this.score += Std.int(score * multiplier * 100);
 		this.multiplier += 1;
 		updateScoreField();
+		
+		var level = this.level;
+		for (i in level...levelThresholds.length) {
+			if (this.score > levelThresholds[i])
+				level = i;
+		}
+		if (level != this.level)
+			setLevel(level);
+	}
+	public function setLevel(level:Int) {
+		this.level = level;
+		switch(level) {
+			case 1:
+				numberColors = 5;
+				maxLength = 6;
+			case 2:
+				changeTickRate(12);
+			case 3:
+				numberColors = 6;
+				changeTickRate(15);
+			case 4:
+				maxLength = 7;
+				changeTickRate(20);
+			case 5:
+				numberColors = 7;
+				changeTickRate(25);
+			case 6:
+				numberColors = 8;
+				maxLength = 8;
+			case 7:
+				changeTickRate(30);
+		}
 	}
 	public function updateScoreField() {
 		scoreField.text = "Score: " + Std.string(this.score) +
-						"\nMult: " + Std.string(this.multiplier) + "x";
+						"\nMult: " + Std.string(this.multiplier) + "x" +
+						"\nLevel: " + Std.string(this.level);
 	}
 	
 	public function cleanup() {
@@ -107,7 +145,7 @@ class Game extends Sprite
 		left = stageXCenter - sizeX * 16;
 		top = stageYCenter - sizeY * 16;
 		scoreField.x = -100;
-		scoreField.y = -300;
+		scoreField.y = -200;
 		scoreField.fontSize = 35;
 		scoreField.color = 0xFF6600;
 		this.addChild(scoreField);
@@ -154,7 +192,7 @@ class Game extends Sprite
 	
 	function changeTickRate(ticksPerSecond) {
 		this.ticksPerSecond = ticksPerSecond;
-		gameClock.stop;
+		gameClock.stop();
 		gameClock = new Timer(Std.int(1 / ticksPerSecond * 1000));
 		gameClock.run = gameTick;
 	}
@@ -200,7 +238,6 @@ class Game extends Sprite
 				this.addChild(activeSnake);
 				nextSnake = Snake.generateRandom(this);
 				
-				// TODO: Reset multiplier
 				this.multiplier = 1;
 				updateScoreField();
 			}
