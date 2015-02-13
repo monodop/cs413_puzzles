@@ -70,7 +70,7 @@ class Main extends Sprite {
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
 			button.x = center.x - 200;
-			button.y = 300  + (i * 150);
+			button.y = 400  + (i * 150);
 			this.addChild(button);
 		}
 		
