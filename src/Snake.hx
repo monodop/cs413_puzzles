@@ -1,5 +1,8 @@
+import flash.media.SoundTransform;
 import starling.display.Sprite;
 import starling.core.Starling;
+import flash.media.SoundChannel;
+import flash.media.Sound;
 
 class Snake extends Sprite {
 	
@@ -26,7 +29,7 @@ class Snake extends Sprite {
 	public static function generateRandom(game:Game) {
 		
 		var length = Std.random(5) + 4;
-		var type = Std.random(6);
+		var type = Std.random(8);
 		
 		var s = new Snake(game, length, type);
 		return s;
@@ -78,7 +81,7 @@ class Snake extends Sprite {
 		
 		if (tiles.length == 0) {
 			// Brand new snake. we need to place the snake
-			var s = new SnakeTile(game, type, this, true);
+			var s = new SnakeTile(game, type, this, true, false);
 			
 			// Place randomly in board at top
 			var stage = Starling.current.stage;
@@ -87,16 +90,17 @@ class Snake extends Sprite {
 			var left = stageXCenter - sizeX * 16;
 			//var top = stageYCenter - sizeY * 16;
 			s.setPos(Std.random(sizeX), 0);
-			//I don't think that we want this s.y = random(top+sizeY+1:Int):Int;
 			
 			this.addChild(s);
 			tiles.push(s);
 			
 		} else if (tiles.length < length) {
 			// Existing snake. Place a new body piece
-			var s = new SnakeTile(game, type, this, false);
 			
-			// TODO: Place at top of board
+			var isTail = tiles.length == length - 1;
+			
+			var s = new SnakeTile(game, type, this, false, isTail);
+			
 			var next = tiles[tiles.length - 1];
 			s.setPos(next.boardX, 0);
 			
@@ -115,6 +119,10 @@ class Snake extends Sprite {
 		game.liveSnakes.remove(this);
 		this.removeFromParent();
 		this.dispose();
+		
+		var st:SoundTransform = new SoundTransform(0.25, 0);
+		var sc:SoundChannel = Root.assets.playSound("EraseSnake");
+		sc.soundTransform = st;
 		
 		// TODO: Modify score?
 		

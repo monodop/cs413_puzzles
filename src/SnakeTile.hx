@@ -13,12 +13,14 @@ class SnakeTile extends Tile {
 	public var texHead : Texture;
 	public var texStraight : Texture;
 	public var texCorner : Texture;
+	public var texTail : Texture;
 	
 	public var isHead = false;
+	public var isTail = false;
 	public var direction : Direction;
 	public var sprite : Image;
 	
-	public function new(game:Game, type:Int, snake:Snake, isHead:Bool) {
+	public function new(game:Game, type:Int, snake:Snake, isHead:Bool, isTail:Bool) {
         super(game);
 		this.x = 0;
 		this.y = 0;
@@ -26,18 +28,22 @@ class SnakeTile extends Tile {
 		this.snake = snake;
 		this.tileType = "Snake";
 		this.isHead = isHead;
+		this.isTail = isTail;
 		
-		var colorLookup = ["Blue", "Green", "Orange", "Purple", "Red", "Yellow"];
+		var colorLookup = ["Blue", "Green", "Orange", "Purple", "Red", "Yellow", "Pink", "Sand"];
 		var color = colorLookup[type];
 		
 		this.texHead = Root.assets.getTexture("Snakehead" + color);
 		this.texStraight = Root.assets.getTexture("SnakeBody" + color);
 		this.texCorner = Root.assets.getTexture("Corner_Tile_" + color);
+		this.texTail = Root.assets.getTexture(color + "_tail");
 		
 		this.direction = Direction.DOWN;
 		
 		if (isHead)
 			this.sprite = new Image(texHead);
+		else if (isTail)
+			this.sprite = new Image(texTail);
 		else
 			this.sprite = new Image(texStraight);
 		this.sprite.pivotX = 16;
@@ -52,9 +58,12 @@ class SnakeTile extends Tile {
 		setPos(boardX, boardY + 1);
 		checkClearing();
 		
-		direction = Direction.DOWN;
+		if (isTail)
+			direction = next.direction;
+		else
+			direction = Direction.DOWN;
 		
-		if (!isHead) {
+		if (!isHead && !isTail) {
 			if (direction == next.direction) {
 				sprite.texture = texStraight;
 				sprite.rotation = 0;
@@ -76,9 +85,12 @@ class SnakeTile extends Tile {
 		setPos(boardX - 1, boardY);
 		checkClearing();
 		
-		direction = Direction.LEFT;
+		if (isTail)
+			direction = next.direction;
+		else
+			direction = Direction.LEFT;
 		
-		if (!isHead) {
+		if (!isHead && !isTail) {
 			if (direction == next.direction) {
 				sprite.texture = texStraight;
 				sprite.rotation = Math.PI / 2;
@@ -99,9 +111,12 @@ class SnakeTile extends Tile {
 		setPos(boardX + 1, boardY);
 		checkClearing();
 		
-		direction = Direction.RIGHT;
+		if (isTail)
+			direction = next.direction;
+		else
+			direction = Direction.RIGHT;
 		
-		if (!isHead) {
+		if (!isHead && !isTail) {
 			if (direction == next.direction) {
 				sprite.texture = texStraight;
 				sprite.rotation = Math.PI / 2;
