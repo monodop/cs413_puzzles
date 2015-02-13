@@ -43,7 +43,8 @@ class Game extends Sprite
 
 	public var score:TextField = new TextField(490, 700, "Score:", "font");
 	var gameClock:Timer;
-	var ticksPerSecond = 10;
+	var ticksPerSecond = 20;
+	var offTick = false;
 	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
@@ -146,43 +147,50 @@ class Game extends Sprite
 	
 	function gameTick() {
 		
-		var makeNewSnake = true;
-		
-		if (activeSnake.canMove()) {
-			activeSnake.step();
-			makeNewSnake = false;
+		if (offTick) {
+			if (keyDown && activeSnake.canMove())
+				activeSnake.step(true);
 		} else {
-			for (i in 0...activeSnake.tiles.length) {
-				var tile = activeSnake.tiles[i];
-				if (tile.boardY < 3) {
-					// Lose
-					cleanup();
-					var menu = new Main(rootSprite);
-					menu.start();                
-					transitionOut(function() {
-						this.removeFromParent();
-						this.dispose();
-					});
+		
+			var makeNewSnake = true;
+			if (activeSnake.canMove()) {
+				activeSnake.step();
+				makeNewSnake = false;
+			} else {
+				for (i in 0...activeSnake.tiles.length) {
+					var tile = activeSnake.tiles[i];
+					if (tile.boardY < 3) {
+						// Lose
+						cleanup();
+						var menu = new Main(rootSprite);
+						menu.start();                
+						transitionOut(function() {
+							this.removeFromParent();
+							this.dispose();
+						});
+					}
 				}
 			}
-		}
-		
-		for (snake in liveSnakes) {
-			if (snake.canMove()) {
-				snake.step();
-				makeNewSnake = false;
+			
+			for (snake in liveSnakes) {
+				if (snake.canMove()) {
+					snake.step();
+					makeNewSnake = false;
+				}
+			}
+			
+			if(makeNewSnake){
+				activeSnake.controllable = false;
+				liveSnakes.add(activeSnake);
+				activeSnake = nextSnake;
+				this.addChild(activeSnake);
+				nextSnake = Snake.generateRandom(this);
+				
+				// TODO: Reset multiplier
 			}
 		}
 		
-		if(makeNewSnake){
-			activeSnake.controllable = false;
-			liveSnakes.add(activeSnake);
-			activeSnake = nextSnake;
-			this.addChild(activeSnake);
-			nextSnake = Snake.generateRandom(this);
-			
-			// TODO: Reset multiplier
-		}
+		offTick = !offTick;
 		
 	}
 	

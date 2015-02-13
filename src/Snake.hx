@@ -36,9 +36,18 @@ class Snake extends Sprite {
 	}
 	
 	// Call this whenever the snake needs to run one "step"
-	public function step() {
+	public function step(?offTick:Bool) {
+		
+		if (offTick == null)
+			offTick = false;
+		
+		if (!offTick && controllable) {
+		}
 		
 		if (tiles.length > 0 && tiles[0].canMove()) {
+			var sc:SoundChannel = Root.assets.playSound("Crawl");
+			var st:SoundTransform = new SoundTransform(0.09, 0);
+			sc.soundTransform = st;
 			
 			var head = tiles[0];
 			var tx = head.boardX;
@@ -46,14 +55,17 @@ class Snake extends Sprite {
 			
 			var left = game.keyLeft;
 			var right = game.keyRight;
+			var down = game.keyDown;
 			
 			if (controllable && head.boardY > 0) {
+				
 				var canMoveLeft = head.canMoveLeft();
 				var canMoveRight = head.canMoveRight();
 				var canMoveDown = head.canMoveDown();
-				if (left && canMoveLeft)
+				
+				if (left && canMoveLeft && !offTick)
 					head.moveLeft();
-				else if (right && canMoveRight)
+				else if (right && canMoveRight && !offTick)
 					head.moveRight();
 				else if (canMoveDown)
 					head.moveDown();
