@@ -48,7 +48,7 @@ class Root extends Sprite {
 		
         assets.loadQueue(function onProgress(ratio:Float) {
             haxe.Log.clear();
-            trace(ratio);
+            //trace(ratio);
             if (ratio == 1) {
                 haxe.Log.clear();
                 startup.removeChild(startup.loadingBitmap);
