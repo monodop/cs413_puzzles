@@ -31,12 +31,14 @@ class Game extends Sprite
 	public var objGrid : Array<Array<Tile>>;
 	public var nextSnake : Snake;
 	public var activeSnake : Snake;
+	public var liveSnakes : List<Snake>;
 	
 	public var keyLeft = false;
 	public var keyRight = false;
 	public var keyDown = false;
 	
 	var gameClock:Timer;
+	public var ticksPerSecond = 10;
 	
 	public function onEnterFrame(event:EnterFrameEvent)
 	{
@@ -108,17 +110,31 @@ class Game extends Sprite
 
 		nextSnake = Snake.generateRandom(this);
 		activeSnake = Snake.generateRandom(this);
-		activeSnake.controllable = true;
+		liveSnakes = new List<Snake>();
 		
 		addChild(activeSnake);
 		
-		gameClock = new Timer(Std.int(1 / 4 * 1000));
+		gameClock = new Timer(Std.int(1 / ticksPerSecond * 1000));
 		gameClock.run = gameTick;
 
     }
 	
 	function gameTick() {
-		activeSnake.step();
+		
+		if(activeSnake.canMove())
+			activeSnake.step();
+		else {
+			activeSnake.controllable = false;
+			liveSnakes.add(activeSnake);
+			activeSnake = nextSnake;
+			this.addChild(activeSnake);
+			nextSnake = Snake.generateRandom(this);
+		}
+		
+		for (snake in liveSnakes) {
+			if (snake.canMove())
+				snake.step();
+		}
 	}
 	
 	private function transitionIn(?callBack:Void->Void) {
