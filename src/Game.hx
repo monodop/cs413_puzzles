@@ -215,7 +215,8 @@ class Game extends Sprite
 						// Lose
 						cleanup();
 						var gameover = new GameOver(rootSprite);
-						gameover.start();           
+						
+						gameover.start();
 						transitionOut(function() {
 							this.removeFromParent();
 							this.dispose();
