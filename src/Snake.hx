@@ -137,6 +137,7 @@ class Snake extends Sprite {
 		sc.soundTransform = st;
 		
 		// TODO: Modify score?
+		game.addScore(this.length);
 		
 	}
 	

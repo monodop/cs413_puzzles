@@ -40,8 +40,12 @@ class Game extends Sprite
 	public var keyLeft = false;
 	public var keyRight = false;
 	public var keyDown = false;
+	
+	public var multiplier = 1;
+	public var score = 0;
+	public var highScore = 0;
 
-	public var score:TextField = new TextField(490, 700, "Score:", "font");
+	public var scoreField:TextField = new TextField(490, 700, "Score: 0\nMult: 1x", "Verdana");
 	var gameClock:Timer;
 	var ticksPerSecond = 20;
 	var offTick = false;
@@ -71,9 +75,19 @@ class Game extends Sprite
         super();
 	}
 	
+	public function addScore(score:Int) {
+		this.score += Std.int(score * multiplier * 100);
+		this.multiplier += 1;
+		updateScoreField();
+	}
+	public function updateScoreField() {
+		scoreField.text = "Score: " + Std.string(this.score) +
+						"\nMult: " + Std.string(this.multiplier) + "x";
+	}
+	
 	public function cleanup() {
-		this.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-		this.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+		Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		Starling.current.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
         this.removeEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 		gameClock.stop();
 	}
@@ -84,19 +98,19 @@ class Game extends Sprite
         var stageXCenter:Float = Starling.current.stage.stageWidth / 2;
         var stageYCenter:Float = Starling.current.stage.stageHeight / 2;
 
-		this.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-		this.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
         this.addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 		bg = new Image(Root.assets.getTexture("background"));
 		this.addChild(bg);
         this.rootSprite = root;
 		left = stageXCenter - sizeX * 16;
 		top = stageYCenter - sizeY * 16;
-		score.x = -100;
-		score.y = -300;
-		score.fontSize = 35;
-		score.color = 0xFF6600;
-		this.addChild(score);
+		scoreField.x = -100;
+		scoreField.y = -300;
+		scoreField.fontSize = 35;
+		scoreField.color = 0xFF6600;
+		this.addChild(scoreField);
 
 		objGrid = new Array<Array<Tile>>();
  
@@ -187,6 +201,8 @@ class Game extends Sprite
 				nextSnake = Snake.generateRandom(this);
 				
 				// TODO: Reset multiplier
+				this.multiplier = 1;
+				updateScoreField();
 			}
 		}
 		
