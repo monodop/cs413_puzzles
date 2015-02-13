@@ -3,9 +3,9 @@ haxe \
 	-cp src \
 	-cp vendor \
 	-swf-version 11.8 \
-	-swf-header 768:1024:60:ffffff \
+	-swf-header 768:1024:60:000000 \
 	-main Startup \
 	-swf Game.swf \
 	-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')"
 
-/c/Users/Kyle/AppData/Local/FlashDevelop/Apps/flexairsdk/4.6.0+16.0.0/bin/adl.exe -profile tv -screensize 576x768:768x768 Game.xml
+/c/Users/Kyle/AppData/Local/FlashDevelop/Apps/flexairsdk/4.6.0+16.0.0/bin/adl.exe -profile tv -screensize 576x768:576x768 Game.xml
