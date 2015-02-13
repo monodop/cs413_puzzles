@@ -14,6 +14,7 @@ import starling.utils.Color;
 class Credits extends Sprite {
 	
 	public var rootSprite:Sprite;
+	public var bg:Image;
 	
 	private var transitionSpeed = 0.5;
 	public var bgcolor = 255;
@@ -34,7 +35,8 @@ class Credits extends Sprite {
 		this.y = center.y;
 		this.scaleX = 1;
 		this.scaleY = 1;
-		
+		bg = new Image(Root.assets.getTexture("background"));
+		this.addChild(bg);
 		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 
 		credits.fontSize = 45;

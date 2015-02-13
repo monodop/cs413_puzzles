@@ -36,6 +36,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/TileTopRed.png");
         assets.enqueue("assets/SnaketrisSprites.png");
         assets.enqueue("assets/SnaketrisSprites.xml");
+        assets.enqueue("assets/background.png");
         /*
             The sprite sheet contains the following items (png):
             Credits, Help, NewGame, Title, blue, green, purple, red, yellow

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:b051d7fc2aa9eee95c46bd90ccc0b2e6:1db74f62f139b435bb331e95af6b7cd8:a51e9fec0813520bcff14e9f4952fbca$ -->
+<!-- $TexturePacker:SmartUpdate:0d0701155ed06060a0b7884834321908:ba5a6006a2b3fc5573795548dfbbf462:a51e9fec0813520bcff14e9f4952fbca$ -->
 <TextureAtlas imagePath="SnaketrisSprites.png">
     <SubTexture name="Corner_Tile_Blue" x="2" y="2" width="32" height="32"/>
     <SubTexture name="Corner_Tile_Green" x="36" y="2" width="32" height="32"/>
