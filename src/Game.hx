@@ -233,6 +233,8 @@ class Game extends Sprite
 							this.removeFromParent();
 							this.dispose();
 						});
+						
+						return;
 					}
 				}
 			}
